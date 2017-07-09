@@ -9,7 +9,7 @@ from bokeh.models import ColumnDataSource
 from bokeh.models.widgets import RadioGroup, PreText
 from bokeh.plotting import figure
 
-from py_src.process_trail_data import HikingProcess
+from process_trail_data import HikingProcess
 
 # Process the data
 hp = HikingProcess()
