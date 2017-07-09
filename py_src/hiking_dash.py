@@ -53,7 +53,7 @@ def change_data_set(new):
     lg_source.data = ufunc.update_line_graphs(new_records)
 
 
-def change_on_select(attrname, old, new):
+def selection_change(attrname, old, new):
     """
     Make changes to the data when a selection is made.
 
@@ -88,7 +88,7 @@ lg_source = ColumnDataSource(data=dict(distances=[trail['Distance'] for trail in
                                        energy=[trail['Energy'] for trail in list(trail_stats.find())],
                                        min_altitude=[trail['Min altitude'] for trail in list(trail_stats.find())],
                                        max_altitude=[trail['Max altitude'] for trail in list(trail_stats.find())]))
-lg_source.on_change('selected', change_on_select)
+lg_source.on_change('selected', selection_change)
 
 # Line graphs for everything!
 tools = 'pan,wheel_zoom,xbox_select,reset'
@@ -101,8 +101,11 @@ dist_time = figure(title="Distance vs. Time",
 dist_time.line(x='dates', y='distances',
                source=lg_source,
                line_width=2,
-               color='darkslategray',
-               selection_color='orange')
+               color='darkslategray')
+dist_time.circle(x='dates', y='distances',
+                 source=lg_source,
+                 color='darkslategray',
+                 selection_color='orange')
 energy_time = figure(title="Energy vs. Time",
                      plot_height=250,
                      plot_width=1200,
@@ -113,8 +116,11 @@ energy_time.x_range = dist_time.x_range
 energy_time.line(x='dates', y='energy',
                  source=lg_source,
                  line_width=2,
-                 color='firebrick',
-                 selection_color='orange')
+                 color='firebrick')
+energy_time.circle(x='dates', y='energy',
+                   source=lg_source,
+                   color='firebrick',
+                   selection_color='orange')
 altitudes = figure(title="Minimum/Maximum Altitude Over Time",
                    plot_height=250,
                    plot_width=1200,
@@ -125,13 +131,19 @@ altitudes.x_range = dist_time.x_range
 altitudes.line(x='dates', y='min_altitude',
                source=lg_source,
                line_width=2,
-               color='violet',
-               selection_color='orange')
+               color='violet')
 altitudes.line(x='dates', y='max_altitude',
                source=lg_source,
                line_width=2,
-               color='navy',
-               selection_color='orange')
+               color='navy')
+altitudes.circle(x='dates', y='min_altitude',
+                 source=lg_source,
+                 color='violet',
+                 selection_color='orange')
+altitudes.circle(x='dates', y='max_altitude',
+                 source=lg_source,
+                 color='navy',
+                 selection_color='orange')
 
 # Layouts
 butt_overview = row(buttons, distances)
