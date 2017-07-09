@@ -93,19 +93,45 @@ lg_source.on_change('selected', change_on_select)
 # Line graphs for everything!
 tools = 'pan,wheel_zoom,xbox_select,reset'
 dist_time = figure(title="Distance vs. Time",
-                   plot_height=250, plot_width=1200, x_axis_type='datetime', tools=tools)
-dist_time.line(x='dates', y='distances', source=lg_source,
-               line_width=2, color='darkslategray')
+                   plot_height=250,
+                   plot_width=1200,
+                   x_axis_type='datetime',
+                   tools=tools,
+                   active_drag='xbox_select')
+dist_time.line(x='dates', y='distances',
+               source=lg_source,
+               line_width=2,
+               color='darkslategray',
+               selection_color='orange')
 energy_time = figure(title="Energy vs. Time",
-                     plot_height=250, plot_width=1200, x_axis_type='datetime', tools=tools)
-energy_time.line(x='dates', y='energy', source=lg_source,
-                 line_width=2, color='firebrick')
+                     plot_height=250,
+                     plot_width=1200,
+                     x_axis_type='datetime',
+                     tools=tools,
+                     active_drag='xbox_select')
+energy_time.x_range = dist_time.x_range
+energy_time.line(x='dates', y='energy',
+                 source=lg_source,
+                 line_width=2,
+                 color='firebrick',
+                 selection_color='orange')
 altitudes = figure(title="Minimum/Maximum Altitude Over Time",
-                      plot_height=250, plot_width=1200, x_axis_type='datetime', tools=tools)
-altitudes.line(x='dates', y='min_altitude', source=lg_source,
-               line_width=2, color='violet')
-altitudes.line(x='dates', y='max_altitude', source=lg_source,
-               line_width=2, color='navy')
+                   plot_height=250,
+                   plot_width=1200,
+                   x_axis_type='datetime',
+                   tools=tools,
+                   active_drag='xbox_select')
+altitudes.x_range = dist_time.x_range
+altitudes.line(x='dates', y='min_altitude',
+               source=lg_source,
+               line_width=2,
+               color='violet',
+               selection_color='orange')
+altitudes.line(x='dates', y='max_altitude',
+               source=lg_source,
+               line_width=2,
+               color='navy',
+               selection_color='orange')
 
 # Layouts
 butt_overview = row(buttons, distances)
